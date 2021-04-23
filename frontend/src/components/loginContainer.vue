@@ -40,12 +40,14 @@
             email: {required, email}
         },
         methods: {
-          async handleSubmit() {
-            await axios.post('login', {
-              email: this.email,
-              password: this.password
-            })
-          }
+            async handleSubmit() {
+                const response = await axios.post('login', {
+                    email: this.email,
+                    password: this.password
+                });
+
+                localStorage.setItem('token', response.data.token);
+            }
         }
     }
 </script>

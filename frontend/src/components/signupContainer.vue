@@ -69,16 +69,16 @@
         },
         methods: {
             async handleSubmit() {
-              const response = await axios.post('signup', {
-                name: this.name,
-                surname: this.surname,
-                password: this.password,
-                repeatPassword: this.repeatPassword,
-                email: this.email
-              });
+                const response = await axios.post('signup', {
+                    name: this.name,
+                    surname: this.surname,
+                    password: this.password,
+                    repeatPassword: this.repeatPassword,
+                    email: this.email
+                });
 
-              console.log(response);
-              this.$router.push('/');
+                console.log(response);
+                //this.$router.push('/');
             }
 
 

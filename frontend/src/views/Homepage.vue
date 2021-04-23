@@ -35,14 +35,20 @@
 <script>
     import navigation from "./../components/navigation.vue";
     import bookImgContainer from "./../components/bookImgContainer.vue";
+    import axios from "axios";
 
     export default {
         name: 'Home',
         components: {
             navigation,
             bookImgContainer
+        },
+        async created() {
+            const response = await axios.get('user');
+
+            console.log(response)
         }
-            
+
     }
 </script>
 

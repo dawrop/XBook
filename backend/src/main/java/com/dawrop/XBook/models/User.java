@@ -15,7 +15,8 @@ public class User {
     private String password;
     private String email;
     private String profile_img;
-    private int id_rank;
+    private String role;
+
 
     @ManyToMany
     @JoinTable(
@@ -29,20 +30,15 @@ public class User {
     private Set<BookRating> ratings = new HashSet<>();
 
 
-
     protected User() {}
 
-    public User(String name, String surname, String password, String email, String profile_img, int id_rank) {
+    public User(String name, String surname, String password, String email, String profile_img, String role) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
         this.profile_img = profile_img;
-        this.id_rank = id_rank;
-    }
-
-    public User(String name, String surname, String password, String email) {
-        new User(name, surname, password, email, "default.png", 3);
+        this.role = role;
     }
 
     @Override
@@ -104,11 +100,11 @@ public class User {
         this.profile_img = profile_img;
     }
 
-    public int getId_rank() {
-        return id_rank;
+    public String getRole() {
+        return role;
     }
 
-    public void setId_rank(int id_rank) {
-        this.id_rank = id_rank;
+    public void setRole(String role) {
+        this.role = role;
     }
 }
