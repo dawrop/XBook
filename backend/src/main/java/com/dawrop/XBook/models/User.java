@@ -4,41 +4,34 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
 @Entity
-@Table(name = "users")
+@Table(name = "users",
+        uniqueConstraints = {
+            @UniqueConstraint(columnNames = "email")
+        })
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String surname;
     private String password;
     private String email;
-    private String profile_img;
-    private String role;
 
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_favourite_books",
-            joinColumns = {@JoinColumn(name = "id_user")},
-            inverseJoinColumns = {@JoinColumn(name = "id_book")}
-    )
-    private Set<Book> favouriteBooks = new HashSet<>();
-
-    @OneToMany(mappedBy = "user")
-    private Set<BookRating> ratings = new HashSet<>();
-
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable( name = "user_roles",
+                joinColumns = @JoinColumn(name = "id_user"),
+                inverseJoinColumns = @JoinColumn(name = "id_role"))
+    private Set<Role> roles = new HashSet<>();
 
     protected User() {}
 
-    public User(String name, String surname, String password, String email, String profile_img, String role) {
+    public User(String name, String surname, String password, String email) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
-        this.profile_img = profile_img;
-        this.role = role;
     }
 
     @Override
@@ -92,19 +85,11 @@ public class User {
         this.email = email;
     }
 
-    public String getProfile_img() {
-        return profile_img;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setProfile_img(String profile_img) {
-        this.profile_img = profile_img;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }
