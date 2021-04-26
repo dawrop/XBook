@@ -48,26 +48,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers().permitAll()
-                .antMatchers("/signup").permitAll()
-                .anyRequest().authenticated();
-
-        http.addFilterBefore(authJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeRequests()
-//                    .antMatchers("/*").permitAll()
-//                    .and()
-//                    .csrf().disable();
+//        http.cors().and().csrf().disable()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+//                .authorizeRequests().antMatchers().permitAll()
+//                .antMatchers("/signup", "/").permitAll()
+//                .anyRequest().authenticated();
+//
+//        http.addFilterBefore(authJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers("/*").permitAll()
+                    .and()
+                    .csrf().disable();
+    }
 
 
 }

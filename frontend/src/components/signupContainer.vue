@@ -1,40 +1,40 @@
 <template>
     <form class="form" v-on:submit.prevent="handleSubmit">
 
-        <input type="text" v-model.trim="$v.name.$model" :class="{'is-invalid': $v.name.$error, 'is-valid': !$v.name.$invalid}" placeholder="Name">
-        <div v-if="$v.name.$error" class="invalid-feedback">
-            <span v-if="!$v.name.required">Name is required.</span>
-            <span v-if="!$v.name.minLength">Name is too short.</span>
+        <input type="text" v-model.trim="user.name" :class="{'is-invalid': user.name.$error, 'is-valid': !user.name.$invalid}" placeholder="Name">
+        <div v-if="user.name.$error" class="invalid-feedback">
+            <span v-if="!user.name.required">Name is required.</span>
+            <span v-if="!user.name.minLength">Name is too short.</span>
         </div>
         
-        <input type="text" v-model.trim="$v.surname.$model" :class="{'is-invalid': $v.surname.$error, 'is-valid': !$v.surname.$invalid}" placeholder="Surname">
-        <div v-if="$v.surname.$error" class="invalid-feedback">
-            <span v-if="!$v.surname.required">Surname is required.</span>
-            <span v-if="!$v.surname.minLength">Surname is too short.</span>
+        <input type="text" v-model.trim="user.surname" :class="{'is-invalid': user.surname.$error, 'is-valid': !user.surname.$invalid}" placeholder="Surname">
+        <div v-if="user.surname.$error" class="invalid-feedback">
+            <span v-if="!user.surname.required">Surname is required.</span>
+            <span v-if="!user.surname.minLength">Surname is too short.</span>
         </div>
-        
-        <input type="password" v-model.trim="$v.password.$model" :class="{'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid}" placeholder="Password">
-        <div v-if="$v.password.$error" class="invalid-feedback">
-            <span v-if="!$v.password.required">Password is required.</span>
-            <span v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} characters.</span>
-            <span v-if="!$v.password.maxLength">Password cannot exceed {{ $v.password.$params.maxLength.max }} characters.</span>
+
+        <input type="password" v-model.trim="user.password" :class="{'is-invalid': user.password.$error, 'is-valid': !user.password.$invalid}" placeholder="Password">
+        <div v-if="user.password.$error" class="invalid-feedback">
+            <span v-if="!user.password.required">Password is required.</span>
+            <span v-if="!user.password.minLength">Password must have at least {{ user.password.$params.minLength.min }} characters.</span>
+            <span v-if="!user.password.maxLength">Password cannot exceed {{ user.password.$params.maxLength.max }} characters.</span>
         </div>
-            
-        <input type="password" v-model.trim="$v.repeatPassword.$model" :class="{'is-invalid': $v.repeatPassword.$error, 'is-valid': !$v.repeatPassword.$invalid}" placeholder="Repeat password">
-        <div v-if="$v.repeatPassword.$error" class="invalid-feedback">
-            <span v-if="!$v.repeatPassword.required">Password is required.</span>
-            <span v-if="!$v.repeatPassword.minLength">Password must have at least {{ $v.repeatPassword.$params.minLength.min }} characters.</span>
-            <span v-if="!$v.repeatPassword.maxLength">Password cannot exceed {{ $v.repeatPassword.$params.maxLength.max }} characters.</span>
-            <span v-if="!$v.repeatPassword.sameAs && $v.repeatPassword.minLength && $v.repeatPassword.maxLength">Passwords don't match.</span>
+
+        <input type="password" v-model.trim="user.repeatPassword" :class="{'is-invalid': user.repeatPassword.$error, 'is-valid': !user.repeatPassword.$invalid}" placeholder="Repeat password">
+        <div v-if="user.repeatPassword.$error" class="invalid-feedback">
+            <span v-if="!user.repeatPassword.required">Password is required.</span>
+            <span v-if="!user.repeatPassword.minLength">Password must have at least {{ user.repeatPassword.$params.minLength.min }} characters.</span>
+            <span v-if="!user.repeatPassword.maxLength">Password cannot exceed {{ user.repeatPassword.$params.maxLength.max }} characters.</span>
+            <span v-if="!user.repeatPassword.sameAs && user.repeatPassword.minLength && user.repeatPassword.maxLength">Passwords don't match.</span>
         </div>
-           
-        <input type="email" v-model.trim="$v.email.$model" :class="{'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}" placeholder="Email">
-        <div v-if="$v.email.$error" class="invalid-feedback">
-            <div v-if="!$v.email.required">Email is required.</div>
-            <div v-if="!$v.email.email">Wrong form</div>
-        </div>                
-            
-        
+
+        <input type="email" v-model.trim="user.email" :class="{'is-invalid': user.email.$error, 'is-valid': !user.email.$invalid}" placeholder="Email">
+        <div v-if="user.email.$error" class="invalid-feedback">
+            <div v-if="!user.email.required">Email is required.</div>
+            <div v-if="!user.email.email">Wrong form</div>
+        </div>
+
+
         <button>SIGN UP</button>
         <p>
             Already have an account? <router-link to="/">Login here</router-link>
@@ -47,17 +47,16 @@
 
 <script>
     import { required, email, minLength, maxLength, sameAs } from 'vuelidate/lib/validators'
-    import axios from 'axios'
+    import User from '../models/user'
 
     export default {
         name: 'signupContainer',
         data() {
             return {
-                name: '',
-                surname: '',
-                password: '',
-                repeatPassword: '',
-                email: ''
+                user: new User('', '', '', '', ''),
+                submitted: false,
+                successful: false,
+                message: ''
             }
         },
         validations: {
@@ -67,23 +66,41 @@
             repeatPassword: {required, minLength: minLength(6), maxLength: maxLength(12), sameAs: sameAs('password')},
             email: {required, email}
         },
-        methods: {
-            async handleSubmit() {
-                const response = await axios.post('signup', {
-                    name: this.name,
-                    surname: this.surname,
-                    password: this.password,
-                    repeatPassword: this.repeatPassword,
-                    email: this.email
-                });
-
-                console.log(response);
-                //this.$router.push('/');
+        computed: {
+            loggedIn() {
+                return this.$store.state.auth.status.loggedIn;
             }
-
-
+        },
+        mounted() {
+            if (this.loggedIn) {
+                this.$router.push('/home')
+            }
+        },
+        methods: {
+            handleSubmit() {
+                this.message = '';
+                this.submitted = true;
+                // this.$v.validate().then(isValid => {
+                //     if (isValid) {
+                        this.$store.dispatch('auth/register', this.user).then(
+                                data => {
+                                    this.message = data.message;
+                                    this.successful = true;
+                                },
+                                error => {
+                                    this.message =
+                                            (error.response && error.response.data) ||
+                                            error.message ||
+                                            error.toString();
+                                    this.successful = false;
+                                }
+                        );
+                //     }
+                // });
+                this.$router.push('/')
+            }
         }
-    }
+    };
 </script>
 
 <style scoped>

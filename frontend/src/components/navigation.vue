@@ -2,19 +2,23 @@
     <div id="nav">
         <div id="myLinks">
             <a>
-                1
+                <router-link to="/profile">
+                    <font-awesome-icon icon="user-circle"/>
+                </router-link>
             </a>
             <a>
-                2
+                <router-link to="/home">
+                    <font-awesome-icon icon="home"/>
+                </router-link>
             </a>
             <a>
-                3
+                <font-awesome-icon icon="search" />
             </a>
             <a>
-                4
+                <font-awesome-icon icon="star" />
             </a>
-            <a>
-                5
+            <a v-on:click.prevent="logOut">
+                <font-awesome-icon icon="sign-out-alt" />
             </a>
         </div>
     </div>
@@ -22,7 +26,18 @@
 
 <script>
     export default {
-        name: 'navigation'
+        name: 'navigation',
+        computed: {
+            currentUser() {
+                return this.$store.state.auth.user;
+            }
+        },
+        methods: {
+            logOut() {
+                this.$store.dispatch('auth/logout');
+                this.$router.push('/');
+            }
+        }
     }
 </script>
 
@@ -49,12 +64,14 @@
         border: none;
         outline: none;
         color: white;
-        font-size: 1.5em;
+        font-size: 30px;
         cursor: pointer;
-        margin-top: 40px;
+        margin-top: 30px;
     }
 
     a:hover{
         color: #777777;
     }
+
+
 </style>

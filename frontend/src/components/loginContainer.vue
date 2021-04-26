@@ -1,23 +1,15 @@
 <template>
     <div class="login">
         <form class="login-form" v-on:submit.prevent="handleSubmit">
-            <input type="email" v-model.trim="$v.email.$model" :class="{'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}" placeholder="Email">
-            <div v-if="$v.email.$error" class="invalid-feedback">
-                <span v-if="!$v.email.required">Email is required.</span>
-                <span v-if="!$v.email.email">Wrong form.</span>
-            </div>
+            <input type="email" v-model.trim="user.email" placeholder="Email">
 
 
-            <input type="password" v-model.trim="$v.password.$model" :class="{'is-invalid': $v.password.$error, 'is-valid': !$v.password.$invalid}" placeholder="Password">
-            <div v-if="$v.password.$error" class="invalid-feedback">
-                <span v-if="!$v.password.required">Password is required.</span>
-                <span v-if="!$v.password.minLength">Password must have at least {{ $v.password.$params.minLength.min }} characters.</span>
-                <span v-if="!$v.password.maxLength">Password cannot exceed {{ $v.password.$params.maxLength.max }} characters.</span>
-            </div>
+
+            <input type="password" v-model.trim="user.password" placeholder="Password">
+
 
             <div class="btn">
                 <button>SIGN IN</button>
-<!--                <button><router-link to="/signup">SIGN UP</router-link></button>-->
             </div>
         </form>
 
@@ -28,14 +20,25 @@
 
 <script>
     import { required, email, minLength, maxLength } from 'vuelidate/lib/validators'
-    import axios from "axios";
+    import User from '../models/user'
 
     export default {
         name: 'loginContainer',
         data() {
             return {
-                password: '',
-                email: ''
+                user: new User('', ''),
+                loading: false,
+                message: ''
+            }
+        },
+        computed: {
+            loggedIn() {
+                return this.$store.state.auth.status.loggedIn;
+            }
+        },
+        created() {
+            if (this.loggedIn) {
+                this.$router.push('/home')
             }
         },
         validations: {
@@ -43,13 +46,23 @@
             email: {required, email}
         },
         methods: {
-            async handleSubmit() {
-                const response = await axios.post('login', {
-                    email: this.email,
-                    password: this.password
-                });
+            handleSubmit() {
+                this.loading = true;
 
-                localStorage.setItem('token', response.data.token);
+                if (this.user.email && this.user.password) {
+                    this.$store.dispatch('auth/login', this.user).then(
+                            () => {
+                                this.$router.push('/home');
+                            },
+                            error => {
+                                this.loading = false;
+                                this.message =
+                                        (error.response && error.response.data) ||
+                                        error.message ||
+                                        error.toString();
+                            }
+                    );
+                }
             }
         }
     }
