@@ -9,11 +9,12 @@
 
 
             <div class="btn">
-                <button>SIGN IN</button>
+                <button type="submit">SIGN IN</button>
+                <button type="button"><router-link to="/signup">SIGN UP</router-link></button>
             </div>
         </form>
 
-        <button><router-link to="/signup">SIGN UP</router-link></button>
+
 
     </div>
 </template>
@@ -69,6 +70,9 @@
 </script>
 
 <style scoped>
+    @import "./../assets/styles/button.css";
+    @import "./../assets/styles/input.css";
+
     .login {
         display: flex;
         flex-direction: column;
@@ -90,33 +94,10 @@
         margin: 0;
     }
 
-    input {
-        background-color: transparent;
-        border: none;
-        border-bottom: 1px solid gray;
-        padding: 0.5em;
-        margin: 1em;
-        width: 50%;
-        font-size: 1.5em;
-    }
-    
     .btn {
         display: flex;
         flex-direction: row;
         align-self: stretch;
         justify-content: center;
-    }
-
-    button {
-        background: #00000066 0% 0% no-repeat padding-box;
-        border: 1px solid #707070;
-        border-radius: 7px;
-
-
-        border: none;
-        color: white;
-        margin: 0.5em;
-        line-height: 2.5em;
-        font-size: 1.25em;
     }
 </style>

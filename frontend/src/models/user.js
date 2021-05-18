@@ -5,6 +5,7 @@ export default class User {
         this.password = password;
         this.repeatPassword = repeatPassword;
         this.email = email;
+        this.roles = [];
     }
 
 }

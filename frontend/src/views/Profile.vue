@@ -1,5 +1,5 @@
 <template>
-    <div id='Profile'>
+    <div id='Home'>
         <navigation/>
 
         <main>
@@ -41,64 +41,29 @@ export default {
 </script>
 
 <style scoped>
-#Profile{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    height: 100vh;
-}
+    @import "./../assets/styles/main.css";
 
-main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-}
+    .userImg, .userDetails {
 
-header {
-    align-self: stretch;
-}
+        width: 20em;
+        display: flex;
+        flex-direction: column;
 
-.logo-homepage {
-    margin-left: auto;
-    text-align: right;
-}
+        justify-content: center;
+        padding: 20px;
+    }
 
-.logo-homepage > img {
-    width: 15em;
-    margin: 1.5em 1.5em;
-}
+    .userDetails {
+        background: #00000059 0% 0% no-repeat padding-box;
+        box-shadow: 0px 6px 6px #00000029;
+        border: 1px solid #707070;
+        border-radius: 11px;
+    }
 
-.content {
-    height: auto;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-}
-
-.userImg, .userDetails {
-
-    width: 20em;
-    display: flex;
-    flex-direction: column;
-
-    justify-content: center;
-    padding: 20px;
-}
-
-.userDetails {
-    background: #00000059 0% 0% no-repeat padding-box;
-    box-shadow: 0px 6px 6px #00000029;
-    border: 1px solid #707070;
-    border-radius: 11px;
-}
-
-label {
-    color: lightgrey;
-    font-size: 30px;
-}
+    label {
+        color: lightgrey;
+        font-size: 30px;
+    }
 
 
 </style>

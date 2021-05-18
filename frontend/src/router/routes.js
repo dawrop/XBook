@@ -1,7 +1,8 @@
 import Login from '../views/Loginpage.vue'
 import SignUp from '../views/SignUppage.vue'
 import Home from '../views/Homepage.vue'
-import Profile from "@/views/Profile";
+import Profile from "@/views/Profile"
+import AddBook from  '../views/AddBookpage'
 
 const routes = [
   {
@@ -23,6 +24,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/addbook',
+    name: 'AddBook',
+    component: AddBook
   }
 ]
 

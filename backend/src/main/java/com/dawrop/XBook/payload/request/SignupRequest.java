@@ -1,5 +1,8 @@
 package com.dawrop.XBook.payload.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -27,6 +30,7 @@ public class SignupRequest {
     @Email
     private String email;
 
+    @JsonIgnore
     private Set<String> role;
 
     public String getName() {

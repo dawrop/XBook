@@ -17,6 +17,12 @@
             <a>
                 <font-awesome-icon icon="star" />
             </a>
+            <a v-if="isAdmin">
+                <router-link to="/addbook">
+                    <font-awesome-icon icon="plus" />
+                </router-link>
+
+            </a>
             <a v-on:click.prevent="logOut">
                 <font-awesome-icon icon="sign-out-alt" />
             </a>
@@ -25,20 +31,24 @@
 </template>
 
 <script>
-    export default {
-        name: 'navigation',
-        computed: {
-            currentUser() {
-                return this.$store.state.auth.user;
-            }
+export default {
+    name: 'navigation',
+    computed: {
+        currentUser() {
+            return this.$store.state.auth.user;
         },
-        methods: {
-            logOut() {
-                this.$store.dispatch('auth/logout');
-                this.$router.push('/');
-            }
+        isAdmin() {
+            return this.currentUser && this.currentUser.roles.includes("ROLE_ADMIN")
+        }
+
+    },
+    methods: {
+        logOut() {
+            this.$store.dispatch('auth/logout');
+            this.$router.push('/');
         }
     }
+}
 </script>
 
 <style scoped>

@@ -19,10 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashSet;
@@ -32,6 +29,7 @@ import java.util.stream.Collectors;
 
 @CrossOrigin("http://localhost:8081")
 @RestController
+
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -63,35 +61,27 @@ public class AuthController {
         }
 
         User user = new User(signupRequest.getName(),
-                                signupRequest.getSurname(),
-                                encoder.encode(signupRequest.getPassword()),
-                                signupRequest.getEmail());
+                signupRequest.getSurname(),
+                encoder.encode(signupRequest.getPassword()),
+                signupRequest.getEmail());
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
             Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                            .orElseThrow(() -> new RuntimeException("Role not found."));
+                    .orElseThrow(() -> new RuntimeException("Role not found."));
             roles.add(userRole);
         } else {
             strRoles.forEach(role -> {
-                switch (role) {
-                    case "admin" -> {
-                        Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-                                .orElseThrow(() -> new RuntimeException("Role not found."));
-                        roles.add(adminRole);
-                    }
-                    case "vip" -> {
-                        Role vipRole = roleRepository.findByName(ERole.ROLE_VIP)
-                                .orElseThrow(() -> new RuntimeException("Role not found."));
-                        roles.add(vipRole);
-                    }
-                    default -> {
-                        Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-                                .orElseThrow(() -> new RuntimeException("Role not found."));
-                        roles.add(userRole);
-                    }
+                if ("admin".equals(role)) {
+                    Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+                            .orElseThrow(() -> new RuntimeException("Role not found."));
+                    roles.add(adminRole);
+                } else {
+                    Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+                            .orElseThrow(() -> new RuntimeException("Role not found."));
+                    roles.add(userRole);
                 }
             });
         }
