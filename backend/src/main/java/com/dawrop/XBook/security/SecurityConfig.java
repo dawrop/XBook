@@ -60,6 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        http.addFilterBefore(authJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 //    }
 
+    @Bean
+    public OriginFilter originFilter() {
+        return new OriginFilter();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -67,6 +72,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/*").permitAll()
                     .and()
                     .csrf().disable();
+
+        http.addFilterBefore(originFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
 

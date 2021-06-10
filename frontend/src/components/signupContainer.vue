@@ -2,16 +2,10 @@
     <form class="form" v-on:submit.prevent="handleSubmit">
 
         <input type="text" v-model.trim="user.name" placeholder="Name">
-
         <input type="text" v-model.trim="user.surname" placeholder="Surname">
-
         <input type="password" v-model.trim="user.password" placeholder="Password">
-
         <input type="password" v-model.trim="user.repeatPassword" placeholder="Repeat password">
-
         <input type="email" v-model.trim="user.email" placeholder="Email">
-
-
 
         <button>SIGN UP</button>
         <p>

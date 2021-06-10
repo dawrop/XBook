@@ -11,7 +11,7 @@
 
             <section class="content">
                 <div class="userImg">
-                    <img src="../assets/covers/lotr1-fellowship.gif">
+<!--                    <img src="../assets/covers/lotr1-fellowship.gif">-->
                 </div>
                 <div class="userDetails">
                     <label>Name: {{ currentUser.name }}</label>

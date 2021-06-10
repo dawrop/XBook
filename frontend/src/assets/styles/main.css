@@ -33,4 +33,21 @@ header {
     align-items: center;
     flex-wrap: wrap;
     justify-content: space-evenly;
+    overflow: auto;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+::-webkit-scrollbar-thumb {
+    background: grey;
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: darkgrey;
+}
+::-webkit-scrollbar-track{
+    background: none;
+    border-radius: 10px;
+
 }

@@ -25,6 +25,14 @@ public class User {
                 inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable( name = "user_favourite_books",
+                joinColumns = @JoinColumn(name = "id_user"),
+                inverseJoinColumns = @JoinColumn(name = "id_book"))
+    private Set<Book> userFavouriteBooks;
+
+
+
     protected User() {}
 
     public User(String name, String surname, String password, String email) {

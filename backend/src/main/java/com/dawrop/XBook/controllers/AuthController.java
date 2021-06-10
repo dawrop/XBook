@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 
 @CrossOrigin("http://localhost:8081")
 @RestController
-
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;

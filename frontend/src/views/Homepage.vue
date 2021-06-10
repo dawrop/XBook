@@ -9,23 +9,9 @@
                 </div>
             </header>
 
-            <section class="content">
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                <bookImgContainer/>
-                
-            </section>
+            <section class="content" ref="content" />
+
+
         </main>
         
     </div>
@@ -35,12 +21,29 @@
 <script>
     import navigation from "./../components/navigation.vue";
     import bookImgContainer from "./../components/bookImgContainer.vue";
+    import axios from "axios";
+    import Vue from "vue";
 
     export default {
         name: 'Home',
         components: {
-            navigation,
-            bookImgContainer
+            navigation
+        },
+        mounted() {
+            axios
+                .get('http://localhost:8080/books')
+                .then(response => response.data)
+                .then(bookList => {this.showBooks(bookList)})
+        },
+        methods: {
+            showBooks(bookList){
+                for (let bookData of bookList) {
+                    let bookElement = new (Vue.extend(bookImgContainer))();
+                    bookElement.$props.coverUuid = bookData.cover
+                    bookElement.$mount()
+                    this.$refs.content.appendChild(bookElement.$el)
+                }
+            }
         }
 
     }

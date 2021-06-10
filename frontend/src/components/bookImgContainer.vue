@@ -1,13 +1,23 @@
 <template>
     <div class="book">
-        <img src="./../assets/covers/theShining.jpg">
+        <img v-bind:src="getImgURL(coverUuid)">
     </div>
 </template>
 
 <script>
     export default {
         name: 'bookImgContainer',
+        props: {
+            coverUuid: String
+        },
+        methods: {
+            getImgURL(imgFile) {
+                let images = require.context("../assets/covers", false, /\.png$/);
+                return images("./" + imgFile + ".png");
+            }
+        }
     }
+
 </script>
 
 <style scoped>
