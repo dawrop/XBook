@@ -1,6 +1,7 @@
 package com.dawrop.XBook.models;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,10 +15,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank
     private String name;
+    @NotBlank
     private String surname;
+    @NotBlank
     private String password;
+    @NotBlank
     private String email;
+    @NotBlank
+    private String avatar;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "user_roles",
@@ -40,6 +47,7 @@ public class User {
         this.surname = surname;
         this.password = password;
         this.email = email;
+        this.avatar = "avatar";
     }
 
     @Override
@@ -91,6 +99,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Set<Role> getRoles() {

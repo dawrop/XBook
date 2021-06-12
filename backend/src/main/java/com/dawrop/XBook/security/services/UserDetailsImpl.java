@@ -1,7 +1,9 @@
 package com.dawrop.XBook.security.services;
 
+import com.dawrop.XBook.models.Role;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -74,8 +76,6 @@ public class UserDetailsImpl implements UserDetails {
         return email;
     }
 
-
-
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -95,4 +95,6 @@ public class UserDetailsImpl implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

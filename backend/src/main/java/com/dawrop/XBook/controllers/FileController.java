@@ -20,6 +20,17 @@ public class FileController {
     public Object addCover(@RequestBody MultipartFile file) {
         String uuid = UUID.randomUUID().toString();
         File myFile = new File("frontend/src/assets/covers/" + uuid + ".png");
+        return getObject(file, uuid, myFile);
+    }
+
+    @PostMapping("/avatars")
+    public Object addAvatar(@RequestBody MultipartFile file) {
+        String uuid = UUID.randomUUID().toString();
+        File myFile = new File("frontend/src/assets/avatars/" + uuid + ".png");
+        return getObject(file, uuid, myFile);
+    }
+
+    private Object getObject(@RequestBody MultipartFile file, String uuid, File myFile) {
         try {
             FileOutputStream fw = new FileOutputStream(myFile);
             fw.write(file.getBytes());

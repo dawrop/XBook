@@ -14,8 +14,8 @@
 <!--                    <img src="../assets/covers/lotr1-fellowship.gif">-->
                 </div>
                 <div class="userDetails">
-                    <label>Name: {{ currentUser.name }}</label>
-                    <label>Surname: {{ currentUser.surname }}</label>
+                    <label>Name: {{ currentUser }}</label>
+<!--                    <label>Surname: {{ currentUser.surname }}</label>-->
                 </div>
 
             </section>
@@ -26,6 +26,7 @@
 
 <script>
 import navigation from "./../components/navigation.vue";
+//import VueJwtDecode from "vue-jwt-decode";
 
 export default {
     name: "Profile",

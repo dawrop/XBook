@@ -37,9 +37,9 @@ export default {
         currentUser() {
             return this.$store.state.auth.user;
         },
-        isAdmin() {
-            return this.currentUser && this.currentUser.roles.includes("ROLE_ADMIN")
-        }
+        // isAdmin() {
+        //     return this.currentUser && this.currentUser.roles.includes("ROLE_ADMIN")
+        // }
 
     },
     methods: {
