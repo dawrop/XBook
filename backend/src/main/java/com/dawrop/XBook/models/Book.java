@@ -27,7 +27,7 @@ public class Book {
     @NotBlank
     private String cover;
 
-    @ManyToMany(mappedBy = "user_favourite_books")
+    @ManyToMany(mappedBy = "userFavouriteBooks")
     private Set<User> userFavouriteBooks;
 
     protected Book() {}

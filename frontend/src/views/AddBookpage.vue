@@ -28,6 +28,7 @@
 <script>
 import navigation from "./../components/navigation.vue";
 import Book from "@/models/book";
+import authHeader from "@/services/auth-header";
 import axios from "axios";
 const API_URL = 'http://localhost:8080/';
 
@@ -43,13 +44,17 @@ export default {
     },
     methods: {
         sendCover() {
+            let user = JSON.parse(localStorage.getItem('user'));
             let coverFile = this.$refs.cover.files[0];
             let reqBody = new FormData();
             reqBody.append("file", coverFile);
             fetch("http://localhost:8080/covers", {
                 method: "post",
                 body: reqBody,
-                credentials: "include"
+                credentials: "omit",
+                headers: {
+                    'Authorization': 'Bearer ' + user.accessToken
+                }
             }).then(response => {
                 if (response.status === 200)
                     return response
@@ -69,7 +74,7 @@ export default {
                 author: this.book.author,
                 genre: this.book.genre,
                 cover: this.book.cover
-            }).then(response => {
+            }, { headers: authHeader() }).then(response => {
                 console.log(response.data)
                 this.$router.push('/')
             }).catch(console.error);
@@ -120,11 +125,31 @@ export default {
     }
 
     .form ::placeholder {
-        color: #000000;
+        color: #bbbbbb;
     }
 
     .form input {
         border-bottom-color: black;
+    }
+
+    @media only screen and (max-device-width: 420px) {
+        #Home {
+            flex-direction: column;
+            height: 101vh;
+        }
+
+        .logo-homepage {
+            display: none;
+        }
+
+        .content-add {
+            display: block;
+            height: 94.5vh;
+        }
+
+        .content-add > form {
+            height: 80vh;
+        }
     }
 
 </style>

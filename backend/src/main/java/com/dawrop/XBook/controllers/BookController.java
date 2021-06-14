@@ -38,17 +38,13 @@ public class BookController {
 
     @GetMapping("/books")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
-    public Object getBooks(@RequestParam(required = false) String title,
-                           @RequestParam(required = false) String author,
-                           @RequestParam(required = false) String genre) {
+    public Object getBooks(@RequestParam(required = false) String title) {
         if (title != null)
-            return bookRepository.findByTitleLike(title);
-        if (author != null)
-            return bookRepository.findByAuthorLike(author);
-        if (genre != null)
-            return bookRepository.findByGenreLike(genre);
+            return bookRepository.findByTitleContainingIgnoreCase(title);
         return bookRepository.findTop10ByOrderByIdDesc();
     }
+
+
 
     @GetMapping("/books/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

@@ -9,9 +9,9 @@
                 </div>
             </header>
 
-            <section class="content">
+            <section id="content">
 
-                <section class="userImg" ref="userImg" />
+                <avatarContainer />
 
                 <div class="userDetails">
                     <label>Name: {{ currentUser.name }}</label>
@@ -33,7 +33,8 @@ import Vue from "vue";
 export default {
     name: "Profile",
     components: {
-        navigation
+        navigation,
+        avatarContainer
     },
     computed: {
         currentUser() {

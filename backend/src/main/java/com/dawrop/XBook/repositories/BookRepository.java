@@ -8,9 +8,8 @@ import java.util.List;
 
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
-    List<Book> findByTitleLike(String title);
-    List<Book> findByAuthorLike(String author);
-    List<Book> findByGenreLike(String genre);
+    List<Book> findByTitleContainingIgnoreCase(String title);
     List<Book> findTop10ByOrderByIdDesc();
+    List<Book> findAllByOrderByIdDesc();
     List<Book> findByUserFavouriteBooks_Id(Long id_user);
 }

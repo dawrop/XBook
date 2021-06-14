@@ -1,6 +1,6 @@
 <template>
     <div class="avatar">
-        <img v-bind:src="getImgURL(avatarUuid)">
+        <img v-bind:src="getImgURL(currentUser.avatar)">
     </div>
 </template>
 
@@ -9,6 +9,11 @@
         name: 'bookImgContainer',
         props: {
             avatarUuid: String
+        },
+        computed: {
+            currentUser() {
+                return this.$store.state.auth.user;
+            }
         },
         methods: {
             getImgURL(imgFile) {
