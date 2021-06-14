@@ -28,15 +28,7 @@
                 <font-awesome-icon icon="sign-out-alt" />
             </a>
 
-            <div id="myOverlay" class="overlay">
-                <span class="closebtn" v-on:click="closeSearch" title="Close Overlay">x</span>
-                <div class="overlay-content">
-                    <form>
-                        <input type="text" v-model.trim="search" placeholder="Search.." name="search">
-                        <button v-on:click="getSearch(search)">Search</button>
-                    </form>
-                </div>
-            </div>
+
 
         </div>
     </div>
@@ -70,9 +62,7 @@ export default {
         openSearch() {
             document.getElementById("myOverlay").style.display = "block";
         },
-        closeSearch() {
-            document.getElementById("myOverlay").style.display = "none";
-        }
+
     }
 }
 </script>
@@ -87,7 +77,7 @@ export default {
         align-items: center;
         background: transparent linear-gradient(180deg, #000000 0%, #8a7500 200%) 0% 0% no-repeat padding-box;
     }
-    
+
     #myLinks {
         display: flex;
         flex-direction: column;
@@ -108,72 +98,6 @@ export default {
     a:hover{
         color: #777777;
     }
-
-    .overlay {
-        height: 100%;
-        width: 100%;
-        display: none;
-        position: fixed;
-        z-index: 1;
-        top: 0;
-        left: 0;
-        background-color: rgb(0,0,0);
-        background-color: rgba(0,0,0, 0.9);
-    }
-
-    .overlay-content {
-        position: relative;
-        top: 20%;
-        width: 60%;
-        text-align: center;
-
-        margin-top: 30px;
-        margin: auto;
-    }
-
-    .overlay .closebtn {
-        position: absolute;
-        top: 20px;
-        right: 45px;
-        font-size: 60px;
-        cursor: pointer;
-        color: white;
-    }
-
-    .overlay .closebtn:hover {
-        color: #ccc;
-    }
-
-    .overlay input[type=text] {
-        padding: 15px;
-        font-size: 17px;
-        border: none;
-        float: left;
-        width: 100%;
-        background: white;
-        align-self: center;
-    }
-
-    .overlay input[type=text]:hover {
-        background: #f1f1f1;
-    }
-
-    .overlay button {
-        float: left;
-        width: 50%;
-        padding: 15px;
-        background: #ddd;
-        font-size: 17px;
-        color: black;
-        border: none;
-        cursor: pointer;
-        align-self: center;
-    }
-
-    .overlay button:hover {
-        background: #bbb;
-    }
-
 
     @media only screen and (max-device-width: 420px) {
         #nav {

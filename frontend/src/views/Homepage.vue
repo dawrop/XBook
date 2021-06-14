@@ -15,8 +15,8 @@
             <div id="myOverlay" class="overlay">
                 <span class="closebtn" v-on:click="closeSearch" title="Close Overlay">x</span>
                 <div class="overlay-content">
-                    <form>
-                        <input type="text" ref="search" placeholder="Search.." name="search">
+                    <form class="myOver">
+                        <input type="search" ref="search" placeholder="Search..." name="search">
                         <button type="button" v-on:click.prevent="searchResults" v-on:click="closeSearch">Search</button>
                     </form>
                 </div>
@@ -31,14 +31,14 @@
     import navigation from "./../components/navigation.vue";
     import bookImgContainer from "./../components/bookImgContainer.vue";
     import Vue from "vue";
-    import {Api} from "@/apiHandler/apiHandler";
+    import { Api } from "@/apiHandler/apiHandler";
 
     export default {
         name: 'Home',
         components: {
             navigation,
         },
-        created() {
+        mounted() {
             Api.get('books')
                     .then(response => response.data)
                     .then(bookList => {this.showBooks(bookList)})
@@ -124,7 +124,7 @@
         color: #ccc;
     }
 
-    .overlay input[type=text] {
+    .myOver input[type=text] {
         padding: 15px;
         font-size: 17px;
         border: none;
@@ -134,7 +134,7 @@
         align-self: center;
     }
 
-    .overlay input[type=text]:hover {
+    .myOver input[type=text]:hover {
         background: #f1f1f1;
     }
 
