@@ -45,6 +45,8 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+
+
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signupRequest) {
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
@@ -62,7 +64,8 @@ public class AuthController {
         User user = new User(signupRequest.getName(),
                 signupRequest.getSurname(),
                 encoder.encode(signupRequest.getPassword()),
-                signupRequest.getEmail());
+                signupRequest.getEmail(),
+                "avatar");
 
         Set<String> strRoles = signupRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -113,4 +116,6 @@ public class AuthController {
                 userDetails.getUsername(),
                 roles));
     }
+
+
 }

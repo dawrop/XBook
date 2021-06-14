@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 @Entity
 @Table(name = "books",
@@ -25,6 +26,9 @@ public class Book {
     private String genre;
     @NotBlank
     private String cover;
+
+    @ManyToMany(mappedBy = "user_favourite_books")
+    private Set<User> userFavouriteBooks;
 
     protected Book() {}
 
@@ -81,5 +85,13 @@ public class Book {
 
     public void setCover(String cover) {
         this.cover = cover;
+    }
+
+    public Set<User> getUserFavouriteBooks() {
+        return userFavouriteBooks;
+    }
+
+    public void setUserFavouriteBooks(Set<User> userFavouriteBooks) {
+        this.userFavouriteBooks = userFavouriteBooks;
     }
 }

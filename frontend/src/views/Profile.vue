@@ -10,9 +10,9 @@
             </header>
 
             <section class="content">
-                <div class="userImg">
-<!--                    <img src="../assets/covers/lotr1-fellowship.gif">-->
-                </div>
+
+                <section class="userImg" ref="userImg" />
+
                 <div class="userDetails">
                     <label>Name: {{ currentUser.name }}</label>
                     <label>Surname: {{ currentUser.surname }}</label>
@@ -26,6 +26,9 @@
 
 <script>
 import navigation from "./../components/navigation.vue";
+import avatarContainer from "@/components/avatarContainer";
+import {Api} from "@/apiHandler/apiHandler";
+import Vue from "vue";
 
 export default {
     name: "Profile",
@@ -35,6 +38,19 @@ export default {
     computed: {
         currentUser() {
             return this.$store.state.auth.user;
+        }
+    },
+    mounted() {
+        Api.get()
+                .then(response => response.data)
+                .then(userData => this.showAvatar(userData))
+    },
+    methods: {
+        showAvatar(userData){
+            let avatarElement = new (Vue.extend(avatarContainer))();
+            avatarElement.$props.avatarUuid = userData.avatar
+            avatarElement.$mount()
+            this.$refs.userImg.appendChild(avatarElement.$el)
         }
     }
 }

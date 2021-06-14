@@ -18,6 +18,7 @@ public class User {
     private String surname;
     private String password;
     private String email;
+    private String avatar;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable( name = "user_roles",
@@ -35,11 +36,12 @@ public class User {
 
     protected User() {}
 
-    public User(String name, String surname, String password, String email) {
+    public User(String name, String surname, String password, String email, String avatar) {
         this.name = name;
         this.surname = surname;
         this.password = password;
         this.email = email;
+        this.avatar = "avatar";
     }
 
     @Override
@@ -50,6 +52,8 @@ public class User {
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", roles=" + roles +
                 '}';
     }
 
@@ -99,5 +103,21 @@ public class User {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Set<Book> getUserFavouriteBooks() {
+        return userFavouriteBooks;
+    }
+
+    public void setUserFavouriteBooks(Set<Book> userFavouriteBooks) {
+        this.userFavouriteBooks = userFavouriteBooks;
     }
 }

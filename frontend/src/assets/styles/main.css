@@ -46,8 +46,27 @@ header {
 ::-webkit-scrollbar-thumb:hover{
     background: darkgrey;
 }
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
     background: none;
     border-radius: 10px;
+}
 
+@media only screen and (max-device-width: 420px){
+    #Home {
+        flex-direction: column;
+        height: 101vh;
+    }
+
+    .logo-homepage {
+        display: none;
+    }
+
+    .content-add {
+        display: block;
+        height: 94.5vh;
+    }
+
+    .content-add > form {
+        height: 80vh;
+    }
 }
