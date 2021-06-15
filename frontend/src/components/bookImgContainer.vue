@@ -24,9 +24,9 @@
     .book {
         margin: 35px;
         flex-wrap: wrap;
-        background: white;
         display: flex;
         flex-direction: column;
+        align-items: center;
     }
 
     .book > img {

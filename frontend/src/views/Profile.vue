@@ -27,7 +27,6 @@
 <script>
 import navigation from "./../components/navigation.vue";
 import avatarContainer from "@/components/avatarContainer";
-import {Api} from "@/apiHandler/apiHandler";
 import Vue from "vue";
 
 export default {
@@ -42,9 +41,7 @@ export default {
         }
     },
     mounted() {
-        Api.get()
-                .then(response => response.data)
-                .then(userData => this.showAvatar(userData))
+
     },
     methods: {
         showAvatar(userData){

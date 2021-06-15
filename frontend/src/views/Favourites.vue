@@ -39,12 +39,12 @@
 
 
     export default {
-        name: 'Home',
+        name: 'Favourites',
         components: {
             navigation,
         },
         mounted() {
-            Api.get('books')
+            Api.get('favourites')
                     .then(response => response.data)
                     .then(bookList => {this.showBooks(bookList)})
         },
@@ -70,7 +70,6 @@
                     }, false)
                 }
             },
-
             searchResults(){
                 const node = document.getElementById("content")
                 while (node.firstChild) {
@@ -91,7 +90,7 @@
                 document.getElementById("dimness").style.display = "none";
 
             }
-        }
+        },
     }
 </script>
 

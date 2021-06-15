@@ -16,7 +16,9 @@
                 <font-awesome-icon icon="search" />
             </a>
             <a>
-                <font-awesome-icon icon="star" />
+                <router-link to="/favourites">
+                    <font-awesome-icon icon="star" />
+                </router-link>
             </a>
             <a v-if="isAdmin">
                 <router-link to="/addbook">

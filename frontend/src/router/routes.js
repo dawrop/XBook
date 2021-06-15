@@ -3,6 +3,7 @@ import SignUp from '../views/SignUppage.vue'
 import Home from '../views/Homepage.vue'
 import Profile from "@/views/Profile"
 import AddBook from  '../views/AddBookpage'
+import Favourites from "@/views/Favourites";
 
 const routes = [
   {
@@ -24,6 +25,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: Profile
+  },
+  {
+    path: '/favourites',
+    name: 'Favourites',
+    component: Favourites
   },
   {
     path: '/addbook',

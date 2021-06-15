@@ -2,6 +2,10 @@ package com.dawrop.XBook.controllers;
 
 import com.dawrop.XBook.models.Book;
 import com.dawrop.XBook.models.User;
+import com.dawrop.XBook.payload.request.AddToFavRequest;
+import com.dawrop.XBook.payload.response.BookResponse;
+import com.dawrop.XBook.payload.response.UserResponse;
+import com.dawrop.XBook.payload.response.UserWithoutBooksResponse;
 import com.dawrop.XBook.repositories.BookRepository;
 import com.dawrop.XBook.repositories.UserRepository;
 import com.dawrop.XBook.security.services.UserDetailsImpl;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin("http://localhost:8081")
 @RestController
@@ -40,8 +45,8 @@ public class BookController {
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Object getBooks(@RequestParam(required = false) String title) {
         if (title != null)
-            return bookRepository.findByTitleContainingIgnoreCase(title);
-        return bookRepository.findTop10ByOrderByIdDesc();
+            return bookRepository.findByTitleContainingIgnoreCase(title).stream().map(BookResponse::new).collect(Collectors.toList());
+        return bookRepository.findTop10ByOrderByIdDesc().stream().map(BookResponse::new).collect(Collectors.toList());
     }
 
 
@@ -56,7 +61,7 @@ public class BookController {
     }
 
     @PostMapping("/favourites")
-    public Object addFavouriteBook(@Valid @RequestParam Book reqBook, Authentication authentication) {
+    public Object addFavouriteBook(@RequestBody AddToFavRequest reqBook, Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         Optional<User> user = userRepository.findById(userDetails.getId());
@@ -69,14 +74,15 @@ public class BookController {
         user.get().getUserFavouriteBooks().add(newFavouriteBook.get());
         newFavouriteBook.get().getUserFavouriteBooks().add(user.get());
 
-        return userRepository.save(user.get());
+        userRepository.save(user.get());
+        return JsonResponse.ok("Added to fav");
     }
 
     @GetMapping("/favourites")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Object getFavouriteBook(Authentication authentication) {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        return bookRepository.findByUserFavouriteBooks_Id(userDetails.getId());
+        return bookRepository.findByUserFavouriteBooks_Id(userDetails.getId()).stream().map(BookResponse::new).collect(Collectors.toList());
     }
 
 //    @GetMapping("/books")
